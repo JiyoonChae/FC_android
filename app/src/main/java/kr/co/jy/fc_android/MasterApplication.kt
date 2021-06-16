@@ -2,11 +2,12 @@ package kr.co.jy.fc_android
 
 import android.app.Application
 import android.content.Context
+import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.OkHttpClient as Okhttp3OkHttpClient
+
 
 class MasterApplication : Application() {
     lateinit var service : Retrofit
@@ -14,6 +15,7 @@ class MasterApplication : Application() {
     //Application을 상속받으면 Activity보다 상위 개념이기때문에 먼저 실행됨.
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
 
         createRetrofit()
 
@@ -52,7 +54,7 @@ class MasterApplication : Application() {
             .client(client)
             .build()
 
-        service = retrofit.create(RetrofitService::class.java)
+        this.service = retrofit.create(RetrofitService::class.java)
     }
 
     //login했으면 header 필요, 안했으면 header 필요x
