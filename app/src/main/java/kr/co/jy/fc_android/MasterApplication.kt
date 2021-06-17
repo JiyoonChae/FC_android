@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MasterApplication : Application() {
-    lateinit var service : Retrofit
+    lateinit var service : RetrofitService
 
     //Application을 상속받으면 Activity보다 상위 개념이기때문에 먼저 실행됨.
     override fun onCreate() {
