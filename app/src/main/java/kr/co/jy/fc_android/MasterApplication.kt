@@ -15,6 +15,7 @@ class MasterApplication : Application() {
     //Application을 상속받으면 Activity보다 상위 개념이기때문에 먼저 실행됨.
     override fun onCreate() {
         super.onCreate()
+        //페북 라이브러리 Stetho..
         Stetho.initializeWithDefaults(this)
 
         createRetrofit()
@@ -59,7 +60,8 @@ class MasterApplication : Application() {
 
     //login했으면 header 필요, 안했으면 header 필요x
     fun checkIsLogin() :Boolean{
-        //가입을하면 사용자 token을 받아서 sharedpreference에 저장이 됨. token의 여부로 로그인 판단
+        //가입을하면 사용자 token을 받아서 sharedpreference에 저장이 됨.
+        // token의 여부로 로그인 판단
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         val token = sp.getString("login_sp", "null")
         if(token != "null") return true

@@ -3,6 +3,7 @@ package kr.co.jy.fc_android
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface RetrofitService {
@@ -21,4 +22,6 @@ interface RetrofitService {
         @Field ("password")password:String
     ):Call<User>
 
+    @GET("/instagram/post/list/all")
+    fun getAllPosts():Call<ArrayList<Post>>
 }

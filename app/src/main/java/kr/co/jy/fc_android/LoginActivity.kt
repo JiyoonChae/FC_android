@@ -38,6 +38,9 @@ class LoginActivity : AppCompatActivity() {
                         saveUserToken(token, this@LoginActivity)
                         (application as MasterApplication).createRetrofit()
                         Toast.makeText(this@LoginActivity, "로그인 하였습니다", Toast.LENGTH_SHORT).show()
+                        startActivity(
+                            Intent(this@LoginActivity, OutStargramPostListActivity::class.java)
+                        )
                     }
                     }
 
