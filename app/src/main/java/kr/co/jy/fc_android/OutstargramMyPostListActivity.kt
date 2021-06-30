@@ -12,24 +12,40 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import kr.co.jy.fc_android.databinding.ActivityOutStargramPostListBinding
+import kr.co.jy.fc_android.databinding.ActivityOutstargramMyPostListBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.zip.Inflater
 
-class OutStargramPostListActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityOutStargramPostListBinding
+class OutstargramMyPostListActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityOutstargramMyPostListBinding
+    lateinit var myPostRecyclerView: RecyclerView
     lateinit var glide: RequestManager
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOutStargramPostListBinding.inflate(layoutInflater)
+        binding = ActivityOutstargramMyPostListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        myPostRecyclerView = binding.myPostRecyclerview
         glide = Glide.with(this)
+        createList()
 
-        (application as MasterApplication).service.getAllPosts().enqueue(
+        binding.showInfo.setOnClickListener {
+            startActivity(Intent(this,OutstargramUserInfo::class.java))
+        }
+        binding.allList.setOnClickListener {
+            startActivity(Intent(this, OutStargramPostListActivity::class.java))
+        }
+        binding.showUpload.setOnClickListener {
+            startActivity(Intent(this,OutstargramUploadActivity::class.java))
+        }
+
+    }
+
+    fun createList() {
+        (application as MasterApplication).service.getMyPostList().enqueue(
             object: Callback<ArrayList<Post>>{
                 override fun onFailure(call: Call<ArrayList<Post>>, t: Throwable) {
 
@@ -40,36 +56,22 @@ class OutStargramPostListActivity : AppCompatActivity() {
                     response: Response<ArrayList<Post>>
                 ) {
                     if(response.isSuccessful){
-                        val postList = response.body()
-                        val adapter = PostAdapter(postList!!, LayoutInflater.from(this@OutStargramPostListActivity),glide)
-                        binding.postRecyclerview.adapter = adapter
-                        binding.postRecyclerview.layoutManager= LinearLayoutManager(this@OutStargramPostListActivity)
-
+                        val myPostList = response.body()
+                        val adapter = MyPostAdapter(myPostList!!, LayoutInflater.from(this@OutstargramMyPostListActivity),glide)
+                        myPostRecyclerView.adapter = adapter
+                        myPostRecyclerView.layoutManager = LinearLayoutManager(this@OutstargramMyPostListActivity)
                     }
-
                 }
             }
         )
-
-        binding.showInfo.setOnClickListener {
-            startActivity(Intent(this,OutstargramUserInfo::class.java))
-        }
-        binding.showMy.setOnClickListener {
-            startActivity(Intent(this, OutstargramMyPostListActivity::class.java))
-        }
-        binding.showUpload.setOnClickListener {
-            startActivity(Intent(this,OutstargramUploadActivity::class.java))
-        }
     }
-
-
 }
 
-class PostAdapter(
+class MyPostAdapter(
     var postList: ArrayList<Post>,
     val inflater: LayoutInflater,
     val glide: RequestManager
-) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MyPostAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val postOwner: TextView
         val postImage: ImageView
@@ -92,9 +94,11 @@ class PostAdapter(
         return postList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyPostAdapter.ViewHolder, position: Int) {
         holder.postOwner.setText(postList.get(position).owner)
         holder.postContent.setText(postList.get(position).content)
         glide.load(postList.get(position).image).into(holder.postImage)
     }
+
+
 }

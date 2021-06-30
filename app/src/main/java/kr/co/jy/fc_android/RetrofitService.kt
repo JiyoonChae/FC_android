@@ -1,10 +1,9 @@
 package kr.co.jy.fc_android
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface RetrofitService {
     @POST("user/signup/")
@@ -24,4 +23,14 @@ interface RetrofitService {
 
     @GET("/instagram/post/list/all")
     fun getAllPosts():Call<ArrayList<Post>>
+
+    @Multipart
+    @POST("instagram/post/")
+    fun uploadPost(
+        @Part image: MultipartBody.Part,
+        @Part ("content")requestBody: RequestBody
+    ):Call<Post>
+
+    @GET("instagram/post/list/")
+    fun getMyPostList():Call<ArrayList<Post>>
 }

@@ -1,21 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".OutStargramPostListActivity">
+    tools:context=".OutstargramUploadActivity"
+    >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/post_recyclerview"
+    <EditText
+        android:id="@+id/content_input"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="300dp"
+        android:hint="내용을 작성해주세요"/>
+
+    <TextView
+        android:id="@+id/view_pictures"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:background="@color/purple_200"
+        android:gravity="center"
+        android:text="사진 선택"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_margin="30dp"
+        />
+
+    <TextView
+        android:id="@+id/upload_pictures"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/view_pictures"
+        android:layout_marginTop="30dp"
+        android:background="@color/purple_200"
+        android:gravity="center"
+        android:text="사진 업로드"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_margin="30dp"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:id="@+id/all_list"
@@ -51,4 +83,5 @@
             android:gravity="center"/>
 
     </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>
